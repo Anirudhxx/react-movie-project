@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import styled from "styled-components";
 
 
-const Modal = ({ title, footer, children, active, hideModal,release_date,vote_count,vote_average}) => {
+const Modal = ({ title, footer, children, active, hideModal}) => {
     return (
       <Fragment>
         {active && (
@@ -10,7 +10,7 @@ const Modal = ({ title, footer, children, active, hideModal,release_date,vote_co
             <ModalOverlay onClick={() => hideModal()}></ModalOverlay>
             <ModalContainer>
               <ModalHeader>
-                <ModalTitle><p className='head1'>{title}</p></ModalTitle>
+                <ModalTitle><p>{title}</p></ModalTitle>
                 <ModalClose onClick={() => hideModal()}>X</ModalClose>
               </ModalHeader>
               <ModalBody>{children}</ModalBody>
@@ -39,7 +39,7 @@ export const ModalBlock = styled.div`
 `;
 
 export const ModalOverlay = styled.a`
-  background: rgba(247, 248, 249, 0.75);
+  background: rgba(0, 0, 0, 0.75);
   bottom: 0;
   cursor: default;
   display: block;
@@ -61,7 +61,7 @@ export const ModalContainer = styled.div`
   border-radius: 0.1rem;
   display: flex;
   flex-direction: column;
-  max-height: 75vh;
+  max-height: 100vh;
   max-width: 850px;
   padding: 0 0.8rem;
   width: 100%;
@@ -71,8 +71,6 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalBody = styled.div`
-  overflow-y: auto;
-  padding: 30px 10px;
   position: relative;
 `;
 

@@ -3,24 +3,99 @@ import './App.css';
 import Card from './components/card'
 import Modal from './components/modal'
 import styled from "styled-components";
+
+const Nav = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 70vw;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px;
+`
+
+const Line = styled.div`
+  border: 1px solid #C0C4CC;
+  width: 70vw;
+`
+
+const Search = styled.input`
+box-sizing: border-box;
+background: #FFFFFF;
+border: 1px solid #C0C4CC;
+border-radius: 2px;
+padding: 5px;
+
+float: right;
+padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 22px;
+`
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+`
+const ModalContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0;
+  padding: 10px;
+`
+
+const MovieOverview = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 16px;
+  padding: 10px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+`
+
 const Image = styled.img`
- padding: 0;
- width: 40%;
+ width: 140%;
+ padding: 10px 10px;
 `;
 
 const CardContainer = styled.div`
- width: 100vw;
-   display: flex;
-   flex-wrap: wrap;
-   align-items: center;
-   justify-content: center;
+  width: 80vw;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px;
 `;
 
 const CardBox = styled.div`
-  padding: 2em;
   width: 20%;
-  border-style: solid;
-  height: 20%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #FFFFFF;
+  border: 1px solid #E1E3E6;
+  box-shadow: 1px 2px 8px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  &:hover {
+    box-shadow: 2px 4px 8px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.15s ease;
+  }
 `;
 
 function App() {
@@ -59,44 +134,44 @@ function App() {
 
 
   return (
-    <div className='bodyStyle'>
-      <h1 classname='heading1'>Most Recent Movies</h1>
-      <hr
-        style={{
-          background: 'lime',
-          color: 'black',
-          borderColor: 'lime',
-          height: '3px',
-        }}
-      />
-      <input
-      className='search1'
-   type="text"
-   placeholder="Search here"
-   value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)} />
-      <CardContainer className='cardContainer1'>
+    <Container>
+      <Nav>
+        <img src="./logo.png" alt="logo" />
+        <Search
+          type="text"
+          placeholder="Search here"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)} />
+      </Nav>
+      <Line/>
+      <h1>Most Recent Movies</h1>
+      <CardContainer>
         {movies.map((movie, i) => <CardBox onClick={() => {
           setCurrMovie(movie)
           setActive(true)
-        }} style={{}}><Card key={i} data={movie}/></CardBox>)}
+        }} style={{}}><Card key={i} data={movie} /></CardBox>)}
       </CardContainer>
       <Modal
-        className='modal1'
         active={active}
         hideModal={() => setActive(false)}
         title={currMovie.title}
-        release_date={currMovie.release_date}
-        vote_average={currMovie.vote_average}
-        vote_count={currMovie.vote_count}
       >
-        <Image classname='modalImage'src={"https://image.tmdb.org/t/p/original"+currMovie["poster_path"]} />
-        <div className='modalText'><b>Release Date: </b>{currMovie.release_date}
-        {currMovie.overview}
-        <br></br>
-        <p><b>{currMovie.vote_average}</b>/10 ({currMovie.vote_count} total votes)</p></div>
+        <ModalContainer>
+          <Image src={"https://image.tmdb.org/t/p/original" + currMovie["poster_path"]} />
+          <MovieOverview>
+            <div>
+              <b>Release Date: </b>{currMovie.release_date}
+              <br></br>
+              <br></br>
+              {currMovie.overview}
+              <br></br>
+              <p><b>{currMovie.vote_average}</b>/10 ({currMovie.vote_count} total votes)</p>
+            </div>
+          </MovieOverview>
+        </ModalContainer>
       </Modal>
-    </div>
+    </Container>
+
 
   );
 }
